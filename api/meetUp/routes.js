@@ -1,5 +1,5 @@
 const express = require("express");
-const upload = require("../../middlewares/multer");
+
 const passport = require("passport");
 const {
   createMeetUpRequest,
@@ -44,7 +44,6 @@ router.get(
 );
 router.post(
   "/:userId",
-  upload.single("image"),
   passport.authenticate("jwt", { session: false }),
   createMeetUpRequest
 );
