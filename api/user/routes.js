@@ -18,7 +18,7 @@ const {
 } = require("./controllers");
 const router = express.Router();
 const passport = require("passport");
-const upload = require("../../middlewares/multer");
+const { upload, processAndSaveImage } = require("../../middlewares/multer");
 const {
   usernameValidator,
   passwordValidator,
@@ -53,7 +53,7 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   getMyFriends
 );
-router.post("/register", upload.single("image"), createUser);
+router.post("/register", upload, processAndSaveImage, createUser);
 
 router.post(
   "/sign-in",

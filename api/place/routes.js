@@ -14,7 +14,7 @@ const {
   getPlacePosts,
 } = require("./controllers");
 
-const upload = require("../../middlewares/multer");
+const { upload, processAndSaveImage } = require("../../middlewares/multer");
 const passport = require("passport");
 const router = express.Router();
 
@@ -35,7 +35,7 @@ router.param("placeId", async (req, res, next, placeId) => {
 
 router.get("/", getAllPlaces);
 
-router.post("/", upload.single("image"), createPlace);
+router.post("/", upload, processAndSaveImage, createPlace);
 
 router.get(
   "/nearby",
@@ -46,7 +46,8 @@ router.get(
 router.post(
   "/check-in",
   passport.authenticate("jwt", { session: false }),
-  upload.single("image"),
+  upload,
+  processAndSaveImage,
   checkIn
 );
 
